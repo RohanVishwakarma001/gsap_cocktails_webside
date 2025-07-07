@@ -1,11 +1,36 @@
 import React from "react";
 import { ScrollTrigger, SplitText } from "gsap/all";
 import { gsap } from "gsap";
+import Navbar from "./components/Navbar";
+import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const App = () => {
-  return <h1 class="text-3xl font-bold underline">Hello world!</h1>;
+  useGSAP(() => {
+    const navTween = gsap.timeline({
+      scrollTrigger: {
+        trigger: "nav",
+        start: "bottom top",
+      },
+    });
+
+    navTween.fromTo(
+      "nav",
+      { backgroundColor: "transparent" },
+      {
+        backgroundColor: "#00000050",
+        backgroundFilter: "blur(10px)",
+        duration: 1,
+        ease: "power1.inOut",
+      }
+    );
+  }, []);
+  return (
+    <main>
+      <Navbar />
+    </main>
+  );
 };
 
 export default App;
